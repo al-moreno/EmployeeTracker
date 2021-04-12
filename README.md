@@ -6,7 +6,7 @@
 
 This app is designed to track employees and create new ones all through the CLI." The solution was build for managing a company's employees using node, inquirer, and MySQL.
 
-
+![VIDEO] (https://www.youtube.com/watch?v=s1bOxsQI3bA)
 
 ![Database Schema](Assets/schema.png)
 
