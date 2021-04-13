@@ -141,16 +141,21 @@ const addARole = () => {
 };
 
 const updateAnEmployeeRole =  () => {
+    connection.query('SELECT employee.id, employee.first_name, employee.last_name, role.id, role.title FROM employee LEFT JOIN role ON employee.role_id = role.id',  (err, result) => {
+        if (err) throw err;
+        console.table(result);
+
     inquirer
         .prompt([
+            
             {
-                name: "first_name",
-                message: "First name of person to update role?",
+                name: "id",
+                message: "Select the id of the employee to be updated: ",
                 type: "input",
             },
             {
-                name: "last_name",
-                message: "Last name of person to update role?",
+                name: "role_id",
+                message: "What role id will they be updating too: ",
                 type: "input",
             },
             {
@@ -173,15 +178,14 @@ const updateAnEmployeeRole =  () => {
                     'Sales',
                 ],
             },
-        ])
-        .then(({ first_name, last_name, role_id }) => {
-            const quary = connection.query('INSERT INTO employee SET ?', 
-            {first_name, last_name, role_id}, (err, result) => {
+        ]).then(({ role_id, id }) => {
+            connection.query('UPDATE employee SET role_id = ? WHERE id = ?', 
+            [role_id, id], (err, result) => {
                 if (err) throw err;
-                viewAllDepartments();
+                viewAllEmployees();
             })
         })
-        
+        })
 };
 connection.connect((err) => {
     if (err) throw err;
